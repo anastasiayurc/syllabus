@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+
+<h2>Login Form</h2>
+
+<form action="" onsubmit="return validate();">
+    <input type="text" placeholder="username" id="userName" name="userid">
+    <input type="text" placeholder="password" id="password" name="passid">
+
+    <input type="button" onclick="validate(this.form)" value="Login">
+</form>
+
+<script>
+    function validate (form){
+        var userName = document.getElementById("userName");
+        var password = document.getElementById("password");
+
+        if(!userName.value) {
+            userName.style.border = "2px solid red";
+            return false
+        }
+
+        if(!password.value){
+            password.style.border = "2px solid red";
+            return false
+        }
+
+        if(form.userid.value == 'ana' && form.passid.value == '123'){
+            window.open('https://www.youtube.com/watch?v=KDxJlW6cxRk&ab_channel=DukeDumontVEVO&ab_channel=DukeDumontVEVO')
+        }
+    }
+</script>
+
+</body>
+</html>
