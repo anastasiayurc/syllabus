@@ -14,25 +14,141 @@
     <input type="button" onclick="validate(this.form)" value="Login">
 </form>
 
+<form action="" onsubmit="return displayUserInfo();">
+    <input type="button" onclick="displayUserInfo(this.form)" value="UserInfo">
+</form>
+
+<h1 id="myUser"></h1>
+
+<form action="" onsubmit="return getText();">
+    <input type="button" onclick="getText(this.form)" value="Get Text">
+</form>
+
+<form action="" onsubmit="return getUsers();">
+    <input type="button" onclick="getUsers(this.form)" value="Get Users">
+</form>
+
+<form action="" onsubmit="return getPosts();">
+    <input type="button" onclick="getPosts(this.form)" value="Get API Data">
+</form>
+
+<!--<button id='getText'>Get Text</button>-->
+
+<div id="output"></div>
+
 <script>
-    function validate (form){
+
+    // document.getElementById('getText').addEventListener('click', getText());
+
+    function getText() {
+        // fetch('sample.txt')
+        //     .then(function(res){
+        //         return res.text()
+        //     })
+        //     .then(function(data){
+        //         console.log(data);
+        //     })
+
+        fetch('sample.txt')
+            .then((res) => res.text())
+            .then((data) => {
+                document.getElementById('output').innerHTML = data;
+            })
+            .catch((err) => console.log(err))
+    }
+
+    function getUsers(){
+        fetch('users.json')
+            .then((res) => res.json())
+            .then((data) => {
+                let output = '<h2>Users</h2>';
+                console.log(data);
+                data.forEach(function(user){
+                    output += `
+                     <ul>
+                        <li>ID: ${user.id}</li>
+                        <li>Name: ${user.name}</li>
+                        <li>Email: ${user.email}</li>
+                    </ul>
+                    `;
+                    document.getElementById('output').innerHTML = output;
+                });
+            })
+    }
+
+    function getPosts(){
+        fetch('https://jsonplaceholder.typicode.com/posts')
+            .then((res) => res.json())
+            .then((data) => {
+                let output = '<h2>Posts</h2>';
+                console.log(data);
+                data.forEach(function(post){
+                    output += `
+                     <div>
+                        <h3>${post.title}</h3>
+                        <p>${post.body}</p>
+
+                    </div>
+                    `;
+                    document.getElementById('output').innerHTML = output;
+                });
+            })
+    }
+
+
+    function validate(form){
+
+        var xhr = new XMLHttpRequest();
         var userName = document.getElementById("userName");
         var password = document.getElementById("password");
+        var body = 'username=' + encodeURIComponent(userName.value) +
+            '&password=' + encodeURIComponent(password.value);
 
-        if(!userName.value) {
-            userName.style.border = "2px solid red";
-            return false
-        }
+        xhr.open('POST', 'https://reqres.in/api/login', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-        if(!password.value){
-            password.style.border = "2px solid red";
-            return false
-        }
+        xhr.send(body);
 
-        if(form.userid.value == 'ana' && form.passid.value == '123'){
-            window.open('https://www.youtube.com/watch?v=KDxJlW6cxRk&ab_channel=DukeDumontVEVO&ab_channel=DukeDumontVEVO')
-        }
     }
+
+    function displayUserInfo (form){
+
+        // var xhr = new XMLHttpRequest();
+        // var userName = document.getElementById("userName");
+        // var password = document.getElementById("password");
+        // var body = 'username=' + encodeURIComponent(userName.value) +
+        //     '&password=' + encodeURIComponent(password.value);
+        //
+        // xhr.open('GET', 'https://reqres.in/api/users/2', true);
+        // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        //
+        // xhr.send(body);
+
+        var userInfo = {
+            "id":2,
+            "first_name":"Janet",
+            "last_name":"Weaver",
+            "avatar":"https://s3.amazonaws.com/uifaces/faces/twitter/josephstein/128.jpg"
+        };
+
+        var jsonStr = JSON.stringify(userInfo);
+
+        document.getElementById("myUser").innerHTML = jsonStr;
+
+
+        // fetch('https://reqres.in/api/users/2').then(function(response) {
+        //     if(response.ok) {
+        //         response.json().then(function(json) {
+        //             products = json;
+        //             initialize();
+        //         });
+        //     } else {
+        //         console.log('Network request for products.json failed with response ' + response.status + ': ' + response.statusText);
+        //     }
+        // });
+
+    }
+
 </script>
 
 </body>
