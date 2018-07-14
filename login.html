@@ -35,7 +35,16 @@
 <!--<button id='getText'>Get Text</button>-->
 
 <div id="output"></div>
+<br>
+<div id="userInfo-id"></div>
+<br>
+<div id="userInfo-first_name"></div>
+<br>
+<div id="userInfo-last_name"></div>
+<br>
+<div id="userInfo-avatar">
 
+</div>
 <script>
 
     // document.getElementById('getText').addEventListener('click', getText());
@@ -130,10 +139,37 @@
             "last_name":"Weaver",
             "avatar":"https://s3.amazonaws.com/uifaces/faces/twitter/josephstein/128.jpg"
         };
+        console.log(userInfo.id);
+        console.log(userInfo.first_name);
+        console.log(userInfo.last_name);
+        console.log(userInfo.avatar);
 
-        var jsonStr = JSON.stringify(userInfo);
+        let userInfoIdElem = userInfo.id;
+        document.getElementById('userInfo-id').innerHTML = userInfoIdElem;
 
-        document.getElementById("myUser").innerHTML = jsonStr;
+        let userInfoFirstName = userInfo.first_name;
+        document.getElementById('userInfo-first_name').innerHTML = userInfoFirstName;
+
+        let userInfoLastName = userInfo.last_name;
+        document.getElementById('userInfo-last_name').innerHTML = userInfoLastName;
+
+        function show_image(src) {
+            var img = document.createElement("img");
+            img.src = src;
+            document.body.appendChild(img);
+        }
+
+        let userInfoAvatar = document.createElement("img");
+        userInfoAvatar.src = "https://s3.amazonaws.com/uifaces/faces/twitter/josephstein/128.jpg";
+        //document.getElementById('userInfo-avatar').appendChild(src) = userInfoAvatar;
+        document.body.appendChild(userInfoAvatar);
+
+
+
+
+        // var jsonStr = JSON.stringify(userInfo);
+        //
+        // document.getElementById("myUser").innerHTML = jsonStr;
 
 
         // fetch('https://reqres.in/api/users/2').then(function(response) {
